@@ -1,10 +1,12 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from team.views import TeamViewSet
+from django.urls import path
 
-router = DefaultRouter()
-router.register(r"", TeamViewSet)
+from team.views import TeamAddMembers, TeamDeleteMembers, TeamList, TeamDetail
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("", TeamList.as_view(), name="team-list"),
+    path("<int:pk>/", TeamDetail.as_view(), name="team-detail"),
+    path("<int:team_id>/add_members/",
+         TeamAddMembers.as_view(), name="add-members"),
+    path("<int:team_id>/delete_members/",
+         TeamDeleteMembers.as_view(), name="delete-members"),
 ]
